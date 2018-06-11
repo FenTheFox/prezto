@@ -10,4 +10,118 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+if [[ -s "${ZDOTDIR:-$HOME/.config}/vertica.zshrc" ]]; then
+  source "${ZDOTDIR:-$HOME/.config}/vertica.zshrc"
+fi
+
+export z="$LESS_TERMCAP_me"
+
+function ls-shared() {
+	cat /proc/$1/maps | awk '{print $6}' | grep '\.so' | grep -v 'fenic' | sort | uniq
+}
+
+setopt menucomplete
+zstyle ':completion:*' menu select=2
+
 # Customize to your needs...
+alias alig='alias | grep '
+alias zlogin='nano ~/.zlogin'
+alias zlogout='nano ~/.zlogout'
+alias zpreztorc='nano ~/.zpreztorc'
+alias zprofile='nano ~/.zprofile'
+alias zshenv='nano ~/.zshenv && source ~/.zshenv'
+alias zshrc='nano ~/.zshrc && source ~/.zshrc'
+
+alias rsync='noglob noremoteglob rsync -ac --progress --no-l --exclude-from ~/.config/gitignore_global'
+
+alias pkill='pkill -u $USER'
+
+# Git aliases are organized by subcommand each one having a unique prefix (ga, gb, gc, gco, etc)
+alias alias g='git'
+
+alias ga='git add'
+alias gaa='git add --all'
+
+alias gb='noglob git branch'
+alias gba='noglob git branch -a'
+alias gbd='noglob git branch -d'
+alias gbD='noglob git branch -D'
+alias gbl='noglob git branch --list'
+alias gbla='noglob git branch -a --list'
+alias gbv='git branch -vv'
+alias gbsu='git branch --track origin/$(git-branch-current) $(git-branch-current)'
+alias gbDa='git branch | grep -v master | grep -v \* | xargs git branch -D'
+
+alias gc='git commit -v'
+alias gca='git commit -v -a'
+alias gcm='git commit -v -m'
+alias gcam='git commit -a -m'
+alias gc!='git commit -v --amend'
+alias gca!='git commit -v -a --amend'
+alias gcn!='git commit -v --no-edit --amend'
+alias gcan!='git commit -v -a --no-edit --amend'
+
+alias gco='git checkout'
+alias gcob='git checkout -b'
+alias gcom='git checkout master'
+
+alias gcp='git cherry-pick'
+alias gcpa='git cherry-pick --abort'
+alias gcpc='git cherry-pick --continue'
+
+alias gd='git diff'
+alias gdc='git diff --cached'
+
+alias gk='\gitk --all --branches'
+compdef _git gk='gitk'
+alias gke='\gitk --all $(git log -g --pretty=%h)'
+compdef _git gke='gitk'
+
+alias gl='git log --stat'
+alias glg='git log --graph --decorate --all'
+alias glo='git log --oneline --decorate'
+alias glol="git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias glola="git log --graph --pretty='%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --all"
+alias glog='git log --oneline --decorate --graph'
+alias gloga='git log --oneline --decorate --graph --all'
+
+alias gm='git merge'
+alias gma='git merge --abort'
+
+alias gmt='git mergetool --no-prompt'
+
+alias gp='git push -v'
+alias gpsu='git push --set-upstream origin $(git-branch-current)'
+
+alias gpl='git pull --ff-only'
+alias gplr='git pull --rebase'
+alias gplrv='git pull --rebase -v'
+
+alias grb='git rebase'
+alias grba='git rebase --abort'
+alias grbc='git rebase --continue'
+alias grbi='git rebase -i'
+alias grbm='git rebase origin/master'
+alias grbim='git rebase -i origin/master'
+
+alias grm='git rm'
+
+alias grh='git reset HEAD'
+alias grhh='git reset HEAD --hard'
+alias grh1='git reset HEAD~1'
+alias grh1h='git reset HEAD~1 --hard'
+
+alias gs='git status'
+
+alias gst='git stash save'
+alias gsta='git stash apply'
+alias gstc='git stash clear'
+alias gstd='git stash drop'
+alias gstl='git stash list'
+alias gstp='git stash pop'
+alias gsts='git stash show --text'
+
+alias gclone='git clone --recursive'
+alias gclean='git clean -fd'
+alias gpristine='git reset --hard && git clean -dfx'
+alias ggui='git gui &'
